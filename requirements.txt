@@ -12,3 +12,5 @@ docx2txt
 google-genai
 langchain_experimental
 sentence-transformers
+streamlit
+torchvision
