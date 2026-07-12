@@ -1,0 +1,237 @@
+DL TEXT DOCUMENT: COMPUTER VISION, SEQUENTIAL MODELS, NLP & TRANSFORMERS, GENERATIVE AI
+=======================================================================================
+
+Purpose: This text document combines the requested topics into a structured study guide with concepts, subtopics, quick revision points, and practice tasks.
+
+Recommended use: Read one major section at a time, revise the checklist, and implement the practice tasks in Python or your preferred ML/DL/MLOps stack.
+
+1. COMPUTER VISION
+------------------
+Computer vision focuses on enabling models to understand images and videos. Deep learning made computer vision highly effective through convolutional neural networks and modern architectures.
+
+Main topics:
+  1.1. Image Basics
+       - Images are represented as pixel matrices.
+       - Color images usually have RGB channels.
+       - Normalization helps stabilize training.
+       - Image resizing and augmentation prepare data for models.
+  1.2. Convolutional Neural Networks
+       - CNNs use convolution filters to detect local patterns.
+       - Early layers detect edges and textures.
+       - Deeper layers detect shapes and objects.
+       - Pooling reduces spatial size and computation.
+  1.3. Classic CNN Architectures
+       - LeNet introduced early CNN ideas.
+       - AlexNet popularized deep CNNs for image classification.
+       - VGG used repeated small convolution filters.
+       - ResNet introduced skip connections to train very deep networks.
+  1.4. Transfer Learning
+       - Uses pretrained models as feature extractors or fine-tuned models.
+       - Reduces training time and data requirement.
+       - Common pretrained networks include ResNet, EfficientNet, and MobileNet.
+       - Useful when labeled image data is limited.
+  1.5. Object Detection
+       - Object detection predicts class and bounding box.
+       - YOLO is known for fast detection.
+       - Faster R-CNN is a two-stage detector.
+       - SSD is a single-shot detector.
+  1.6. Image Segmentation
+       - Segmentation predicts class label for pixels.
+       - Semantic segmentation labels each pixel category.
+       - Instance segmentation separates individual objects.
+       - U-Net and Mask R-CNN are common architectures.
+
+Common tools / libraries:
+  - OpenCV
+  - TensorFlow/Keras
+  - PyTorch
+  - torchvision
+  - YOLO frameworks
+
+Quick revision checklist:
+  [ ] Can explain convolution and pooling.
+  [ ] Can differentiate classification, detection, and segmentation.
+  [ ] Can use transfer learning.
+  [ ] Can apply image augmentation.
+
+Practice tasks:
+  - Build a CNN for image classification.
+  - Fine-tune a pretrained ResNet model.
+  - Run a simple object detection model on sample images.
+
+2. SEQUENTIAL MODELS
+--------------------
+Sequential models process ordered data such as text, time series, speech, and sensor data. They learn dependencies where order matters.
+
+Main topics:
+  2.1. Sequence Data
+       - Sequence data has order and temporal dependency.
+       - Examples include sentences, stock prices, audio, and clickstreams.
+       - Input length can vary across examples.
+       - Padding and masking are often used.
+  2.2. Recurrent Neural Networks
+       - RNNs process one step at a time.
+       - They maintain hidden state to remember previous information.
+       - Basic RNNs struggle with long-term dependencies.
+       - Vanishing gradients make long sequences difficult.
+  2.3. LSTM
+       - LSTM uses gates to control memory.
+       - Forget gate decides what to remove.
+       - Input gate decides what to add.
+       - Output gate decides what to expose.
+       - LSTM improves long-term dependency learning.
+  2.4. GRU
+       - GRU is a simpler gated recurrent unit.
+       - It has fewer parameters than LSTM.
+       - It can train faster in some tasks.
+       - Often gives comparable performance to LSTM.
+  2.5. Bidirectional Models
+       - Bidirectional RNN/LSTM reads sequence forward and backward.
+       - Useful when entire sequence is available.
+       - Common for NLP classification and tagging tasks.
+       - Not suitable for real-time future prediction where future context is unavailable.
+  2.6. Time Series Forecasting
+       - Predicts future values from historical data.
+       - Windowing converts time series into supervised format.
+       - Evaluation should respect time order.
+       - Common metrics include MAE, RMSE, and MAPE.
+
+Common tools / libraries:
+  - TensorFlow/Keras
+  - PyTorch
+  - statsmodels
+  - pandas
+  - scikit-learn
+
+Quick revision checklist:
+  [ ] Can explain hidden state.
+  [ ] Can compare RNN, LSTM, and GRU.
+  [ ] Can create sequence windows.
+  [ ] Can evaluate time series without leakage.
+
+Practice tasks:
+  - Build an LSTM for text classification.
+  - Create a GRU model for simple time series forecasting.
+  - Compare unidirectional and bidirectional LSTM.
+
+3. NLP AND TRANSFORMERS
+-----------------------
+Natural Language Processing enables machines to process text. Transformers changed NLP by using attention mechanisms instead of recurrence for many tasks.
+
+Main topics:
+  3.1. Text Preprocessing
+       - Tokenization splits text into units.
+       - Lowercasing, stopword handling, and punctuation processing may be task-dependent.
+       - Subword tokenization helps handle unknown words.
+       - Vocabulary design affects model input representation.
+  3.2. Word Embeddings
+       - Embeddings represent words or tokens as vectors.
+       - Word2Vec and GloVe are classic static embeddings.
+       - Embedding similarity captures semantic relationships.
+       - Modern models use contextual embeddings.
+  3.3. Seq2Seq Models
+       - Sequence-to-sequence models map input sequence to output sequence.
+       - Used for translation, summarization, and dialogue tasks.
+       - Encoder processes input; decoder generates output.
+       - Attention improves information flow.
+  3.4. Attention Mechanism
+       - Attention lets models focus on relevant tokens.
+       - Self-attention relates tokens within the same sequence.
+       - Attention weights help model contextual relationships.
+       - It supports parallel processing better than recurrence.
+  3.5. Transformers
+       - Transformers use self-attention and feed-forward layers.
+       - They include positional encoding to represent order.
+       - Encoder-style models are useful for understanding tasks.
+       - Decoder-style models are useful for generation tasks.
+  3.6. BERT, GPT, T5, and Llama
+       - BERT is encoder-based and strong for understanding tasks.
+       - GPT-style models are decoder-based and strong for generation.
+       - T5 frames tasks as text-to-text.
+       - Llama is a family of large language models used in modern GenAI workflows.
+  3.7. Prompt Engineering
+       - Prompts guide model behavior.
+       - Clear instructions improve output quality.
+       - Examples can help the model follow the desired pattern.
+       - For enterprise use, prompts should be specific, safe, and grounded.
+
+Common tools / libraries:
+  - Hugging Face Transformers
+  - spaCy
+  - NLTK
+  - sentence-transformers
+  - PyTorch
+  - TensorFlow
+
+Quick revision checklist:
+  [ ] Can explain tokenization and embeddings.
+  [ ] Can explain attention in simple terms.
+  [ ] Can differentiate encoder and decoder models.
+  [ ] Can use pretrained transformer models.
+
+Practice tasks:
+  - Use a transformer for sentiment classification.
+  - Generate embeddings for text similarity.
+  - Try summarization using a pretrained sequence-to-sequence model.
+
+4. GENERATIVE AI
+----------------
+Generative AI focuses on creating new content such as text, images, audio, code, and multimodal outputs using learned patterns from data.
+
+Main topics:
+  4.1. Autoencoders
+       - Autoencoders compress input into latent representation.
+       - Decoder reconstructs the input.
+       - Used for dimensionality reduction and anomaly detection.
+       - Denoising autoencoders learn robust representations.
+  4.2. Variational Autoencoders
+       - VAE learns a probabilistic latent space.
+       - It can generate new samples by sampling latent vectors.
+       - It balances reconstruction loss and distribution regularization.
+       - Useful for generative representation learning.
+  4.3. GANs
+       - GANs include generator and discriminator.
+       - Generator creates fake samples.
+       - Discriminator distinguishes real from fake.
+       - Training is adversarial and can be unstable.
+       - Used in image generation, style transfer, and data synthesis.
+  4.4. Diffusion Models
+       - Diffusion models learn to remove noise step by step.
+       - They are powerful for image generation.
+       - They start from noise and gradually produce structured output.
+       - Many modern image generation systems use diffusion-style methods.
+  4.5. Large Language Models
+       - LLMs generate and understand text using large-scale training.
+       - They can summarize, classify, extract, reason, and generate code.
+       - Context window limits how much text the model can consider at once.
+       - Grounding and retrieval improve factual reliability.
+  4.6. Multimodal Models
+       - Multimodal models process more than one data type.
+       - Examples include text-image, text-audio, and vision-language systems.
+       - They support tasks like image captioning and visual question answering.
+       - They are important in modern GenAI applications.
+
+Common tools / libraries:
+  - Hugging Face
+  - Diffusers
+  - PyTorch
+  - TensorFlow
+  - LangChain/LlamaIndex for GenAI pipelines
+
+Quick revision checklist:
+  [ ] Can explain GAN generator vs discriminator.
+  [ ] Can explain diffusion at a high level.
+  [ ] Can explain LLM use cases.
+  [ ] Can identify multimodal AI examples.
+
+Practice tasks:
+  - Build a simple autoencoder.
+  - Use a pretrained text generation model.
+  - Try image generation with a diffusion pipeline if resources are available.
+
+FINAL REVISION SUMMARY
+----------------------
+1. Understand the purpose of each topic, not only the definition.
+2. Learn the common workflow and where the topic fits in a real project.
+3. Practice by building small examples and noting metrics, errors, and observations.
+4. Keep this document as a roadmap and expand it with code examples later.

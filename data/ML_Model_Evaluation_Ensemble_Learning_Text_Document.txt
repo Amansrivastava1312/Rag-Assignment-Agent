@@ -1,0 +1,138 @@
+ML TEXT DOCUMENT: MODEL EVALUATION AND ENSEMBLE LEARNING
+========================================================
+
+Purpose: This text document combines the requested topics into a structured study guide with concepts, subtopics, quick revision points, and practice tasks.
+
+Recommended use: Read one major section at a time, revise the checklist, and implement the practice tasks in Python or your preferred ML/DL/MLOps stack.
+
+1. MODEL EVALUATION
+-------------------
+Model evaluation helps determine whether a machine learning model is useful, reliable, and suitable for the business problem. It focuses on measuring performance on unseen data instead of only checking training accuracy.
+
+Main topics:
+  1.1. Train, Validation, and Test Split
+       - Training data is used to fit the model.
+       - Validation data is used for tuning and model selection.
+       - Test data is kept aside for final unbiased evaluation.
+       - Avoid data leakage by splitting before fitting preprocessing transformations.
+  1.2. Cross Validation
+       - Cross validation evaluates the model across multiple folds.
+       - It gives a more stable estimate when the dataset is limited.
+       - K-fold cross validation is commonly used for supervised learning.
+       - Stratified K-fold helps preserve class distribution in classification tasks.
+  1.3. Classification Metrics
+       - Accuracy measures overall correct predictions.
+       - Precision measures how many predicted positives are actually positive.
+       - Recall measures how many actual positives were captured.
+       - F1 score balances precision and recall.
+       - Confusion matrix shows TP, FP, TN, and FN.
+  1.4. Regression Metrics
+       - MAE measures average absolute error.
+       - MSE penalizes large errors more strongly.
+       - RMSE is the square root of MSE and is in target units.
+       - R-squared explains the proportion of variance captured by the model.
+  1.5. ROC-AUC and PR-AUC
+       - ROC-AUC measures ranking quality across thresholds.
+       - Precision-recall curves are useful for imbalanced classification.
+       - Threshold selection should depend on business cost.
+       - Do not rely on only accuracy for imbalanced datasets.
+  1.6. Bias-Variance Tradeoff
+       - High bias leads to underfitting.
+       - High variance leads to overfitting.
+       - A good model balances simplicity and flexibility.
+       - Validation performance helps detect this tradeoff.
+  1.7. Hyperparameter Tuning
+       - Grid search checks predefined combinations.
+       - Random search samples combinations and can be faster.
+       - Bayesian optimization searches intelligently using previous results.
+       - Tune using validation data or cross validation, not the final test set.
+
+Common tools / libraries:
+  - scikit-learn metrics
+  - cross_val_score
+  - GridSearchCV
+  - RandomizedSearchCV
+  - mlflow for tracking evaluation results
+
+Quick revision checklist:
+  [ ] Can explain precision vs recall.
+  [ ] Can read a confusion matrix.
+  [ ] Can choose a metric based on business problem.
+  [ ] Can identify overfitting from train vs validation scores.
+  [ ] Can perform cross validation.
+
+Practice tasks:
+  - Train a classification model and calculate accuracy, precision, recall, F1, and ROC-AUC.
+  - Train a regression model and calculate MAE, RMSE, and R-squared.
+  - Compare two models using cross validation.
+  - Change classification threshold and observe precision-recall tradeoff.
+
+2. ENSEMBLE LEARNING
+--------------------
+Ensemble learning combines multiple models to improve prediction performance, stability, and generalization. Instead of depending on a single model, ensembles use the combined strength of several learners.
+
+Main topics:
+  2.1. Bagging
+       - Bagging trains multiple models on different bootstrap samples.
+       - It reduces variance and improves stability.
+       - Random Forest is a popular bagging technique.
+       - Bagging works well with high-variance models such as decision trees.
+  2.2. Random Forest
+       - Random Forest builds many decision trees.
+       - Each tree sees a different sample of data and features.
+       - Predictions are averaged for regression or voted for classification.
+       - It is robust and often performs well with minimal tuning.
+  2.3. Boosting
+       - Boosting trains models sequentially.
+       - Each new model focuses more on previous errors.
+       - Boosting can reduce bias and improve accuracy.
+       - It needs careful tuning to avoid overfitting.
+  2.4. AdaBoost
+       - AdaBoost increases weight for misclassified observations.
+       - Later weak learners focus more on difficult samples.
+       - It is simple and historically important.
+       - It can be sensitive to noisy data and outliers.
+  2.5. Gradient Boosting
+       - Gradient boosting fits new learners to residual errors.
+       - It optimizes a loss function step by step.
+       - It is powerful for tabular data.
+       - Learning rate and number of estimators are important hyperparameters.
+  2.6. XGBoost, LightGBM, and CatBoost
+       - XGBoost is optimized gradient boosting with regularization.
+       - LightGBM is efficient for large datasets.
+       - CatBoost handles categorical features effectively.
+       - These libraries are common in practical ML competitions and industry tasks.
+  2.7. Stacking and Voting
+       - Voting combines predictions from multiple models.
+       - Hard voting uses class votes; soft voting uses probabilities.
+       - Stacking trains a meta-model on base model outputs.
+       - Stacking can be powerful but must be validated carefully to avoid leakage.
+
+Common tools / libraries:
+  - RandomForestClassifier
+  - GradientBoostingClassifier
+  - XGBoost
+  - LightGBM
+  - CatBoost
+  - VotingClassifier
+  - StackingClassifier
+
+Quick revision checklist:
+  [ ] Can explain bagging vs boosting.
+  [ ] Can describe why Random Forest reduces variance.
+  [ ] Can explain how boosting learns sequentially.
+  [ ] Can compare voting and stacking.
+  [ ] Can tune number of estimators, depth, and learning rate.
+
+Practice tasks:
+  - Train Decision Tree and Random Forest on same dataset and compare results.
+  - Train Gradient Boosting and compare with Random Forest.
+  - Build a voting classifier using three models.
+  - Use feature importance from tree-based ensembles.
+
+FINAL REVISION SUMMARY
+----------------------
+1. Understand the purpose of each topic, not only the definition.
+2. Learn the common workflow and where the topic fits in a real project.
+3. Practice by building small examples and noting metrics, errors, and observations.
+4. Keep this document as a roadmap and expand it with code examples later.

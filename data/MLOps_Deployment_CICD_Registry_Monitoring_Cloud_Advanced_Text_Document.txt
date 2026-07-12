@@ -1,0 +1,296 @@
+MLOPS TEXT DOCUMENT: DEPLOYMENT, CI/CD, REGISTRY, MONITORING, CLOUD PLATFORMS AND ADVANCED MLOPS
+================================================================================================
+
+Purpose: This text document combines the requested topics into a structured study guide with concepts, subtopics, quick revision points, and practice tasks.
+
+Recommended use: Read one major section at a time, revise the checklist, and implement the practice tasks in Python or your preferred ML/DL/MLOps stack.
+
+1. CONTAINERIZATION AND DEPLOYMENT
+----------------------------------
+Containerization and deployment help package ML applications so that they run reliably outside the development machine.
+
+Main topics:
+  1.1. Docker Basics
+       - Docker packages application code, dependencies, and runtime environment.
+       - Images are templates; containers are running instances.
+       - Dockerfiles define how an image is built.
+       - Containers reduce environment mismatch between development and production.
+  1.2. Model Serving
+       - Model serving exposes trained models for prediction.
+       - Batch serving processes many records at intervals.
+       - Online serving responds to real-time requests.
+       - Serving requires preprocessing consistency with training.
+  1.3. FastAPI and Flask
+       - FastAPI is commonly used to expose ML models as APIs.
+       - Flask is a lightweight web framework.
+       - APIs receive input, validate it, run inference, and return output.
+       - Input validation is important for reliable predictions.
+  1.4. Kubernetes
+       - Kubernetes orchestrates containers at scale.
+       - It manages deployment, scaling, and recovery.
+       - Pods run containers.
+       - Services expose workloads to other systems.
+  1.5. ONNX and TensorRT
+       - ONNX supports model portability across frameworks.
+       - TensorRT is used for optimized inference on NVIDIA GPUs.
+       - Model optimization can improve latency and throughput.
+       - Compatibility testing is needed after converting models.
+
+Common tools / libraries:
+  - Docker
+  - FastAPI
+  - Flask
+  - Kubernetes
+  - ONNX
+  - TensorRT
+
+Quick revision checklist:
+  [ ] Can write a basic Dockerfile.
+  [ ] Can create a prediction API.
+  [ ] Can explain batch vs online inference.
+  [ ] Can explain why deployment needs the same preprocessing as training.
+
+Practice tasks:
+  - Wrap a trained scikit-learn model in FastAPI.
+  - Create Docker image for model API.
+  - Test API with sample JSON input.
+
+2. CI/CD FOR ML
+---------------
+CI/CD for ML automates testing, validation, building, and deployment steps. ML also adds data and model checks beyond normal software CI/CD.
+
+Main topics:
+  2.1. Continuous Integration
+       - CI runs checks whenever code changes.
+       - It includes unit tests, linting, and integration tests.
+       - For ML, CI can also validate data schemas and training pipeline execution.
+       - The goal is to catch problems early.
+  2.2. Continuous Delivery and Deployment
+       - CD prepares or deploys application changes automatically.
+       - ML deployment may include model artifact packaging.
+       - Deployment should include rollback planning.
+       - Approval gates may be used for critical models.
+  2.3. Continuous Training
+       - Continuous training retrains models when needed.
+       - Triggers can include new data, drift, or scheduled retraining.
+       - Retraining should be validated before promotion.
+       - New models should be compared against the current baseline.
+  2.4. Pipeline Automation
+       - Pipelines automate repetitive ML workflow steps.
+       - Steps can include data validation, preprocessing, training, evaluation, and model registration.
+       - Automation reduces manual errors.
+       - Pipelines improve repeatability.
+  2.5. CI/CD Tools
+       - GitHub Actions can automate testing and builds.
+       - Jenkins is widely used for CI/CD workflows.
+       - Azure DevOps supports pipelines and releases.
+       - Tool choice depends on organization and infrastructure.
+
+Common tools / libraries:
+  - GitHub Actions
+  - Jenkins
+  - Azure DevOps
+  - GitLab CI/CD
+  - Makefiles
+  - pre-commit hooks
+
+Quick revision checklist:
+  [ ] Can explain CI, CD, and CT.
+  [ ] Can list ML-specific checks in a pipeline.
+  [ ] Can explain rollback need.
+  [ ] Can compare new model to baseline before deployment.
+
+Practice tasks:
+  - Create a CI workflow that runs tests.
+  - Add data validation check to the workflow.
+  - Create a pipeline step that trains and evaluates a model.
+
+3. MODEL REGISTRY
+-----------------
+A model registry stores, versions, and manages trained model artifacts and their lifecycle stages.
+
+Main topics:
+  3.1. Model Versioning
+       - Each registered model version should point to a specific artifact.
+       - Versioning helps compare, deploy, and roll back models.
+       - Model versions should be linked to metrics and experiment runs.
+       - Version names should be clear and meaningful.
+  3.2. Model Lifecycle Stages
+       - Common lifecycle stages include development, staging, production, and archived.
+       - Promotion should depend on evaluation and approval.
+       - Archived models are kept for traceability but not actively used.
+       - Production models should be monitored continuously.
+  3.3. Artifacts and Metadata
+       - Artifacts include model files, preprocessors, encoders, and reports.
+       - Metadata includes metrics, parameters, dataset version, code version, and owner.
+       - Metadata supports reproducibility and audit.
+       - A model without metadata is difficult to trust.
+  3.4. Registry Tools
+       - MLflow Model Registry manages model versions and stages.
+       - Azure ML Registry supports model assets in Azure workflows.
+       - SageMaker Model Registry supports AWS ML workflows.
+       - Registry choice depends on platform and deployment target.
+
+Common tools / libraries:
+  - MLflow Model Registry
+  - Azure ML Registry
+  - AWS SageMaker Model Registry
+
+Quick revision checklist:
+  [ ] Can explain why model registry is needed.
+  [ ] Can describe model lifecycle stages.
+  [ ] Can identify artifact vs metadata.
+  [ ] Can link model version to experiment run.
+
+Practice tasks:
+  - Register a trained model using MLflow.
+  - Attach metrics and parameters to the model version.
+  - Promote a model from staging to production in a test workflow.
+
+4. MONITORING AND OBSERVABILITY
+-------------------------------
+Monitoring and observability help detect whether a deployed model is still performing reliably after release.
+
+Main topics:
+  4.1. Model Monitoring
+       - Tracks model behavior after deployment.
+       - Monitors prediction distribution, latency, errors, and throughput.
+       - Requires dashboards and alerts.
+       - Monitoring detects issues early before users are heavily affected.
+  4.2. Data Drift
+       - Data drift occurs when input data distribution changes.
+       - It can reduce model performance.
+       - Drift should be monitored using statistical checks.
+       - Retraining may be needed if drift is severe.
+  4.3. Concept Drift
+       - Concept drift occurs when relationship between input and target changes.
+       - It is harder to detect without labels.
+       - Delayed labels make monitoring challenging.
+       - Business process changes can cause concept drift.
+  4.4. Performance Monitoring
+       - Tracks metrics such as accuracy, recall, RMSE, or business KPIs.
+       - Requires ground truth labels when available.
+       - Compare production performance with validation expectations.
+       - Performance decay can trigger retraining.
+  4.5. Logging and Alerts
+       - Logs capture requests, predictions, errors, and metadata.
+       - Alerts notify teams about unusual behavior.
+       - Good alerts should be actionable.
+       - Avoid too many noisy alerts.
+
+Common tools / libraries:
+  - Prometheus
+  - Grafana
+  - Evidently AI
+  - WhyLabs
+  - Azure Monitor
+  - CloudWatch
+
+Quick revision checklist:
+  [ ] Can explain data drift vs concept drift.
+  [ ] Can list production metrics to monitor.
+  [ ] Can explain need for logs and alerts.
+  [ ] Can identify when retraining may be required.
+
+Practice tasks:
+  - Create a dashboard for prediction counts and latency.
+  - Compare training and production feature distributions.
+  - Set an alert for high error rate.
+
+5. CLOUD PLATFORMS
+------------------
+Cloud platforms provide managed services for training, deployment, tracking, orchestration, and monitoring of ML systems.
+
+Main topics:
+  5.1. Azure Machine Learning
+       - Azure ML supports experiments, pipelines, model registry, deployment, and monitoring.
+       - It integrates with Azure infrastructure and enterprise workflows.
+       - Useful for teams already using Microsoft cloud services.
+       - Supports managed compute and ML lifecycle assets.
+  5.2. AWS SageMaker
+       - SageMaker supports model building, training, tuning, deployment, and registry workflows.
+       - It integrates with AWS data and compute services.
+       - Common in AWS-centric organizations.
+       - Supports managed endpoints and batch transform.
+  5.3. Google Vertex AI
+       - Vertex AI supports managed ML workflows on Google Cloud.
+       - It includes training, pipelines, model registry, and prediction services.
+       - Useful with BigQuery and Google Cloud data ecosystem.
+       - Supports AutoML and custom training workflows.
+  5.4. Choosing a Cloud Platform
+       - Consider existing organization cloud stack.
+       - Consider data location and compliance requirements.
+       - Consider managed services for training and deployment.
+       - Consider cost, scalability, and team skills.
+
+Common tools / libraries:
+  - Azure Machine Learning
+  - AWS SageMaker
+  - Google Vertex AI
+
+Quick revision checklist:
+  [ ] Can name major ML cloud platforms.
+  [ ] Can explain why platform choice depends on ecosystem.
+  [ ] Can identify cloud services for training, registry, deployment, and monitoring.
+
+Practice tasks:
+  - Map an ML lifecycle to Azure ML, SageMaker, or Vertex AI services.
+  - Create a comparison table for cloud ML platforms.
+
+6. ADVANCED MLOPS
+-----------------
+Advanced MLOps extends basic production ML workflows into scalable, governed, and GenAI-ready systems.
+
+Main topics:
+  6.1. Feature Stores
+       - Feature stores manage reusable features.
+       - They help keep training and serving features consistent.
+       - They support feature discovery and reuse.
+       - They are useful when multiple models share features.
+  6.2. Vector Databases
+       - Vector databases store embeddings for similarity search.
+       - They are important for RAG and semantic search.
+       - They support nearest-neighbor retrieval.
+       - Examples include FAISS-style indexes and managed vector DB services.
+  6.3. LLMOps
+       - LLMOps applies MLOps ideas to large language model applications.
+       - Tracks prompts, model versions, evaluation results, and safety checks.
+       - Includes prompt versioning and response quality monitoring.
+       - Important for enterprise GenAI systems.
+  6.4. RAG Pipelines
+       - RAG combines retrieval with generation.
+       - Documents are chunked, embedded, indexed, retrieved, and passed to an LLM.
+       - RAG improves grounding when implemented carefully.
+       - Evaluation should check retrieval quality and answer quality.
+  6.5. AI Governance and Responsible AI
+       - Governance defines controls for fairness, privacy, security, and accountability.
+       - Responsible AI checks should be included across ML lifecycle.
+       - Documentation improves transparency.
+       - Human review may be required for high-impact use cases.
+
+Common tools / libraries:
+  - Feast
+  - FAISS
+  - Pinecone/Weaviate-style vector DBs
+  - MLflow
+  - LangChain
+  - LlamaIndex
+  - Azure AI services
+
+Quick revision checklist:
+  [ ] Can explain feature store purpose.
+  [ ] Can explain vector database role in RAG.
+  [ ] Can describe LLMOps basics.
+  [ ] Can list responsible AI concerns.
+
+Practice tasks:
+  - Design a RAG pipeline diagram in text.
+  - Create a prompt versioning table.
+  - Define monitoring metrics for an LLM app.
+
+FINAL REVISION SUMMARY
+----------------------
+1. Understand the purpose of each topic, not only the definition.
+2. Learn the common workflow and where the topic fits in a real project.
+3. Practice by building small examples and noting metrics, errors, and observations.
+4. Keep this document as a roadmap and expand it with code examples later.
