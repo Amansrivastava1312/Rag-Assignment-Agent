@@ -22,7 +22,7 @@ def main():
         if question.lower() == "exit":
             break
 
-        answer = rg.ask_question(question)
+        answer = rg.ask_question_agentic(question)
 
         print("\nAnswer:")
         print(answer)

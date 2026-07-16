@@ -8,6 +8,8 @@ sentence-transformers
 huggingface-hub
 python-dotenv  
 pypdf
+reportlab
+datetime
 docx2txt
 google-genai
 langchain_experimental

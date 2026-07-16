@@ -1,4 +1,27 @@
+# ===== Secrets =====
 .env
-.venv/
-# vector_db/
+.env.*
+!.env.example
+
+# ===== Python =====
 __pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# ===== Virtual Environment =====
+.venv/
+venv/
+env/
+
+
+
+# ===== Vector Database =====
+vector_db/
+*.pkl
+
+# ===== IDE / OS =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

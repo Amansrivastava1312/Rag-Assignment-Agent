@@ -1,0 +1,26 @@
+
+cd Rag-Assignment
+
+
+## 2️⃣ Create a virtual environment
+
+python3 -m venv .venv
+
+source .venv/bin/activate
+
+pip install -r requirements.txt
+
+---
+
+## 5️⃣ Set up environment variables
+
+Create a file named `.env` in the project root and add:
+
+take reference from .env.example
+
+
+## 7️⃣ Run the chatbot
+
+python3 agentic_workflow.py
+
+

@@ -4,9 +4,10 @@ from src.chunking import Chunker
 from src.embeddings import Embeddings
 from src.vector_store import VectorStore
 from pathlib import Path
-
+from src.agent_tool import send_email,export_pdf,export_txt
 from src.retriever import MainRetriever
 from src.generator import Generation
+from src.intent_log import log_intent
 class RagPipeLine:
     def __init__(self):
         self.vector_db = None
@@ -41,6 +42,36 @@ class RagPipeLine:
 
         generator = Generation()
         answer = generator.ask_question(question,context)
+        return answer
+    def ask_question_agentic(self, question):
+        generator = Generation()
+
+        plan = generator.parse_intent(question)
+        print("Intent:", plan)
+
+        real_question = plan.get("question") or question
+        rtrv = MainRetriever()
+        context = rtrv.TopK(real_question, self.vector_db, 3)
+        answer = generator.ask_question(real_question, context)
+
+        log_intent(question, plan, answer)
+
+        # ---- ACT ON INTENT ----
+        file_path = None
+        if plan.get("export") == "pdf":
+            file_path = export_pdf(real_question, answer)
+        elif plan.get("export") == "txt":
+            file_path = export_txt(real_question, answer)
+
+        if plan.get("email"):
+            to_addr = plan.get("email_to") or "aman@yopmail.com"
+            send_email(
+                to_address=to_addr,
+                subject="Your AI Advisor Response",
+                body=f"Question:\n{real_question}\n\nAnswer:\n{answer}",
+                attachment=file_path,      # attaches PDF/TXT if created
+            )
+
         return answer
     def load_db(self):
         embd = Embeddings()

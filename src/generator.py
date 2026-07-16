@@ -1,10 +1,12 @@
 import os 
 from dotenv import load_dotenv
 from google import genai
+import re
+import json
 class Generation:
-    def __init__(self):
+   def __init__(self):
         pass
-    def ask_question(self,user_question,context):
+   def ask_question(self,user_question,context):
         load_dotenv()
         api_key = os.getenv('GEMINI_API_KEY')
         client = genai.Client(api_key=api_key)
@@ -45,3 +47,40 @@ Never break these rules. Do not guess. Keep answers relevant and to the point.
         )
         return response.text
 
+   def parse_intent(self, user_question):
+      load_dotenv()
+      client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+
+      prompt = f"""You are an intent router for an AI chatbot.
+   Read the user's message and return ONLY valid JSON (no markdown, no explanation).
+
+   Keys:
+   - "question": the actual question to answer (remove any export/email words)
+   - "export": "pdf", "txt", or null
+   - "email": true or false
+   - "email_to": recipient email if given, else null
+
+   Examples:
+   "what is an LLM, give me as pdf"
+   -> {{"question": "what is an LLM", "export": "pdf", "email": false, "email_to": null}}
+   "explain SLMs and mail it to raj@x.com"
+   -> {{"question": "explain SLMs", "export": null, "email": true, "email_to": "raj@x.com"}}
+   "convert LoRA explanation to text and mail me"
+   -> {{"question": "explain LoRA", "export": "txt", "email": true, "email_to": null}}
+   "hi"
+   -> {{"question": "hi", "export": null, "email": false, "email_to": null}}
+
+   USER MESSAGE: "{user_question}"
+
+   JSON:"""
+
+      response = client.models.generate_content(
+         model='gemini-3.1-flash-lite',
+         contents=prompt
+      )
+      raw = re.sub(r"```json|```", "", response.text).strip()
+      try:
+         return json.loads(raw)
+      except json.JSONDecodeError:
+         return {"question": user_question, "export": None,
+                  "email": False, "email_to": None}
