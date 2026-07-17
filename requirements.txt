@@ -10,6 +10,7 @@ python-dotenv
 pypdf
 reportlab
 datetime
+streamlit
 docx2txt
 google-genai
 langchain_experimental

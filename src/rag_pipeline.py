@@ -47,16 +47,14 @@ class RagPipeLine:
         generator = Generation()
 
         plan = generator.parse_intent(question)
-        print("Intent:", plan)
-
         real_question = plan.get("question") or question
+
         rtrv = MainRetriever()
         context = rtrv.TopK(real_question, self.vector_db, 3)
         answer = generator.ask_question(real_question, context)
 
         log_intent(question, plan, answer)
 
-        # ---- ACT ON INTENT ----
         file_path = None
         if plan.get("export") == "pdf":
             file_path = export_pdf(real_question, answer)
@@ -65,14 +63,11 @@ class RagPipeLine:
 
         if plan.get("email"):
             to_addr = plan.get("email_to") or "aman@yopmail.com"
-            send_email(
-                to_address=to_addr,
-                subject="Your AI Advisor Response",
-                body=f"Question:\n{real_question}\n\nAnswer:\n{answer}",
-                attachment=file_path,      # attaches PDF/TXT if created
-            )
+            send_email(to_addr, "Your AI Advisor Response",
+                            f"Question:\n{real_question}\n\nAnswer:\n{answer}",
+                            attachment=file_path)
 
-        return answer
+        return plan, answer, file_path        # 👈 return all three
     def load_db(self):
         embd = Embeddings()
         embedding_model = embd.get_embedding_model()
